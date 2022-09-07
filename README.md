@@ -5,7 +5,7 @@ A small front end library for making component based apps with vanilla javascrip
 > npm i keywall (coming soon)
 
 ```js
-import {renderApp, renderComp} from '../Xtract/lib.js'
+import {renderApp, renderComp} from 'keywall'
 import {Button} from './components/button.js';
 import {Card} from './components/card.js'
 
