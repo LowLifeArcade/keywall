@@ -9,16 +9,8 @@ export function renderComp(opts) {
     let { template, style } = opts;
     const hash = useAlphaHash();
     stack.push(hash);
-
-    // ------ STYLES
-    style = style.split('.');
-    for (let i = 1; i < style.length; i++) {
-        style[i] = '.' + hash + '-' + style[i];
-    }
-    // ------ STYLES
-
     
-    // TEMPLATE ARRAY
+    // TEMPLATE
     template = template.split('class=');
     for (let i = 0; i < template.length; i++) {
 
@@ -43,18 +35,17 @@ export function renderComp(opts) {
                     classNames = classList.split(' ');
                 }
 
-                // creates class names list
+                // creates classlist with hashes
                 let newClassNames = [];
                 for (let i = 0; i < classNames.length; i++) {
                     let className = classNames[i];
 
-                    // if (className !== '') {
                     if (hasNoHash) {
                         className = hash + '-' + className;
                         newClassNames.push(className);
                     }
-                    // }
                 }
+
                 if (newClassNames.length) {
                     classNames = newClassNames
                 }
@@ -62,16 +53,18 @@ export function renderComp(opts) {
                 elementItems[0] = 'class="' + classNames.join(' ') + '"';
                 classList = elementItems.join('');
 
-                // if (elArr[i] !== '') {
-                    // console.log("🚀 ~classList", classList)
-                // }
-
             }
             template[i] = classList;
         }
     }
-    style = style.join('');
     template = template.filter(Boolean).join('');
+    
+    // STYLES
+    style = style.split('.');
+    for (let i = 1; i < style.length; i++) {
+        style[i] = '.' + hash + '-' + style[i];
+    }
+    style = style.join('');
 
     let css;
     let existingStyles = document.querySelector('style');
@@ -84,6 +77,7 @@ export function renderComp(opts) {
     }
 
     document.head.append(css);
+
     return template;
 }
 
