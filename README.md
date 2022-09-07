@@ -5,15 +5,16 @@ A small front end library for making component based apps with vanilla javascrip
 > npm i keywall (coming soon)
 
 ```js
-import {renderApp, renderComp} from 'keywall'
-import {Button} from './components/button.js';
-import {Card} from './components/card.js'
+import { renderApp, renderComp } from 'keywall'
+import { Button } from './components/button.js';
+import { Card } from './components/card.js'
 
 function App(props) {
     const name = 'World';
 
     return renderComp({
-        template: /* HTML */ `
+        template: 
+        /* HTML */ `
             <div class="container">
                 <h1 class="title">Hello ${name}</h1>
                 ${Button({ name: 'click me', color: 'salmon' })}
@@ -21,7 +22,8 @@ function App(props) {
                 ${Card({ name: 'card', color: 'salmon', shadow: true})}
             </div>
         `,
-        style: /* CSS */ `
+        style: 
+        /* CSS */ `
             .container {
                 display: flex;
                 flex-direction: column;
