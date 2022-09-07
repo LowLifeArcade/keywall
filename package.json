@@ -1,0 +1,12 @@
+{
+  "name": "keywall",
+  "version": "1.0.0",
+  "description": "vanilla front end framework",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Low Life Arcade",
+  "license": "MIT"
+}
