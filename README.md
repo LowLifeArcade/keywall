@@ -1,5 +1,6 @@
 # KEYWALL
-A Small front end library meant to make writing a vanilla js app much easier. The css is auto scopped so building components won't have random effects on other parts of your app, making it fun to build components.
+
+A small front end library for making component based apps with vanilla javascript. The css is auto scopped so building components won't have random effects on other parts of your app, making it fun to build components with playfull styling.
 
 > npm i keywall (coming soon)
 
