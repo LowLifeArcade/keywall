@@ -87,8 +87,8 @@ export function renderComp(opts) {
     return template;
 }
 
-export function renderApp(appTemplate) {
-    const app = document.getElementById('app');
+export function renderApp(elementId, appTemplate) {
+    const app = document.getElementById(elementId);
     app.innerHTML = appTemplate;
 }
 
