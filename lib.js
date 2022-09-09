@@ -1,37 +1,33 @@
 let stack = [];
 
 /**
- *
- * @param {{ template: InnerHTML, style: InnerHTML }} opts
- * @returns InnerHTML
+ * ### RenderComp
+ * @param {{ template: HTMLTemplateElement, style: HTMLStyleElement }} opts
+ * @returns HTMLTemplateElement
  */
 export function renderComp(opts) {
-    let { template, style } = opts;
+    let { template, style, methods } = opts;
+
     const hash = useAlphaHash();
     stack.push(hash);
-    
+
     // TEMPLATE
     template = template.split('class=');
     for (let i = 0; i < template.length; i++) {
-
         // if starts with " that means it was split on class and is therefor a classList
         if (template[i].startsWith('"')) {
             // removes first " mark so we can test the string easier
             let tempClass = '$class' + template[i];
             let elArr = tempClass.split('$class"');
 
-            let classList;
+            let element;
             let classNames = [];
             for (let i = 0; i < elArr.length; i++) {
-                let elementItems = [
-                    elArr[i].slice(0, elArr[i].indexOf('"')), // classList
-                    elArr[i].slice(elArr[i].indexOf('"') + 1) // rest of element
-                ];
-                
-                let hasNoHash = !stack.includes(elementItems[0].split('-')[0]);
+                element = elArr[i];
+                let classList = element.slice(0, element.indexOf('"'));
+                let hasNoHash = !stack.includes(classList.split('-')[0]);
 
-                if (elArr[i] !== '') {
-                    classList = elArr[i].substr(0, elArr[i].indexOf('"'));
+                if (element !== '') {
                     classNames = classList.split(' ');
                 }
 
@@ -47,18 +43,18 @@ export function renderComp(opts) {
                 }
 
                 if (newClassNames.length) {
-                    classNames = newClassNames
+                    classNames = newClassNames;
                 }
-                
-                elementItems[0] = 'class="' + classNames.join(' ') + '"';
-                classList = elementItems.join('');
 
+                let restOfElement = element.slice(element.indexOf('"') + 1);
+                classList = 'class="' + classNames.join(' ') + '"';
+                element = [classList, restOfElement].join('');
             }
-            template[i] = classList;
+            template[i] = element;
         }
     }
     template = template.filter(Boolean).join('');
-    
+
     // STYLES
     style = style.split('.');
     for (let i = 1; i < style.length; i++) {
@@ -76,14 +72,64 @@ export function renderComp(opts) {
         css.innerHTML = style;
     }
 
+    // JAVASCRIPT
+    let jsString = '';
+    for (const k in methods) {
+        if (Object.hasOwnProperty.call(methods, k)) {
+            let method = methods[k];
+            method = method.toString();
+            if (!jsString.includes(method)) {
+                jsString = jsString + method + '\n';
+            }
+        }
+    }
+    // jsString =jsString.join('')
+    // TODO: Use array instead of string
+    let js;
+    let existingJs = document.querySelector('script');
+    if (existingJs.innerHTML) {
+        if (existingJs.innerHTML == jsString) {
+            js = existingJs;
+            js.innerHTML = existingJs.innerHTML + jsString;
+        }
+    } else {
+        js = document.createElement('script');
+        js.setAttribute('async', true);
+        js.innerHTML = jsString;
+    }
+
+    js !== undefined && document.head.append(js);
     document.head.append(css);
 
     return template;
 }
 
-export function renderApp(elementId, appTemplate) {
+// TODO: find way to make Ids type from querying all elements by id
+/**
+ * @typedef { 'app' | 'webApp' | 'root' | 'id' } Ids
+ * @type {<K extends Ids>(
+ * elementId: K | HTMLDivElement, 
+ * appTemplate: string | function, 
+ * options: { testCount: number, test: boolean })}
+ */
+export function renderApp(elementId, appTemplate, options) {
     const app = document.getElementById(elementId);
     app.innerHTML = appTemplate;
+    options?.test && performanceTest(appTemplate, options);
+}
+
+function performanceTest(appTemplate, { testCount = 100 }) {
+    const pTimeStart = performance.now();
+    console.log('Test start: ', pTimeStart);
+
+    for (let i = 0; i < testCount; i++) {
+        const div = document.createElement('div');
+        div.innerHTML = appTemplate;
+        app.appendChild(div);
+    }
+
+    const pTimeEnd = performance.now();
+    console.log('Test end: ', pTimeEnd);
 }
 
 export function useAlphaHash() {
