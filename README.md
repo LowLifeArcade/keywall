@@ -2,7 +2,7 @@
 
 A small front end library for making component based apps with vanilla javascript. The css is auto scopped so building components won't have random effects on other parts of your app, making it fun to build components with playfull styling.
 
-> npm i keywall (coming soon)
+> npm i keywall
 
 ```js
 import { renderApp, renderComp } from 'keywall'
@@ -16,7 +16,7 @@ function App(props) {
         template: 
         /* HTML */ `
             <div class="container">
-                <h1 class="title">Hello ${name}</h1>
+                <h1 class="title">Hello ${ name }</h1>
                 ${Button({ name: 'click me', color: 'salmon' })}
                 ${Button({ name: 'click moo', color: 'lightgreen' })}
                 ${Card({ name: 'card', color: 'salmon', shadow: true})}

@@ -56,6 +56,7 @@ export function renderComp(opts) {
     template = template.filter(Boolean).join('');
 
     // STYLES
+    // TODO: split on .[alpha] or regex like /(.)[A-z]/ and !number
     style = style.split('.');
     for (let i = 1; i < style.length; i++) {
         style[i] = '.' + hash + '-' + style[i];
