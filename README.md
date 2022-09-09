@@ -2,7 +2,6 @@
 
 A small front end library for making component based apps with vanilla javascript. No bundler required. Just install and start using keywall on any html project.
 
-
 ## Install
 
 > npm i keywall
@@ -10,6 +9,8 @@ A small front end library for making component based apps with vanilla javascrip
 ## Usage
 
 `app.js`
+
+>Use Tobermory's [es6-String-Html vscode plugin](https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html)  for syntax highlighting in your template strings.
 
 ```js
 import { renderApp, renderComp } from './node_modules/keywall/lib.js'
