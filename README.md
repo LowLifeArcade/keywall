@@ -1,11 +1,18 @@
 # KEYWALL
 
-A small front end library for making component based apps with vanilla javascript. The css is auto scopped so building components won't have random effects on other parts of your app, making it fun to build components with playfull styling.
+A small front end library for making component based apps with vanilla javascript. No bundler required. Just install and start using keywall on any html project.
+
+
+## Install
 
 > npm i keywall
 
+## Usage
+
+`app.js`
+
 ```js
-import { renderApp, renderComp } from 'keywall'
+import { renderApp, renderComp } from './node_modules/keywall/lib.js'
 import { Button } from './components/button.js';
 import { Card } from './components/card.js'
 
@@ -45,3 +52,15 @@ function App(props) {
 
 renderApp('app', App());
 ```
+
+`index.html`
+
+```html
+<body>
+    <div id="app"></div>
+    <script type="module" src="./app.js"></script>
+</body>
+```
+
+> Note the install is from a full path ( './node_modules/keywall/lib.js' ). This is because we're not using a bundler.
+> 
