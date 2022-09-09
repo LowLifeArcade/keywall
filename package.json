@@ -1,6 +1,6 @@
 {
   "name": "keywall",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "vanilla front end framework",
   "type": "module",
   "module": "lib.js",
@@ -11,6 +11,6 @@
   },
   "author": "Low Life Arcade",
   "license": "MIT",
-  "files": ["lib.js"]
+  "files": ["*.js", "*.cjs"]
 }
   
