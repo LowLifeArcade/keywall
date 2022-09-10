@@ -120,8 +120,8 @@ export function renderApp(elementId, appTemplate, options) {
 }
 
 function performanceTest(appTemplate, { testCount = 100 }) {
-    const pTimeStart = performance.now();
-    console.log('Test start: ', pTimeStart);
+    const pTimeStart = Math.round(performance.now());
+    console.log('Test start: ', pTimeStart + 'ms', );
 
     for (let i = 0; i < testCount; i++) {
         const div = document.createElement('div');
@@ -129,15 +129,16 @@ function performanceTest(appTemplate, { testCount = 100 }) {
         app.appendChild(div);
     }
 
-    const pTimeEnd = performance.now();
+    const pTimeEnd = Math.round(performance.now());
     console.log('Test end: ', pTimeEnd);
+    console.log('Total render time: ', pTimeEnd - pTimeStart);
 }
 
 export function useAlphaHash() {
     let result = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let characters = 'abcdefghijklmnopqrstuvwxyz';
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 5; i++) {
         result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return result;
