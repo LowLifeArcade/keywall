@@ -25,7 +25,7 @@ export function renderComp(opts) {
             for (let i = 0; i < elArr.length; i++) {
                 element = elArr[i];
                 let classList = element.slice(0, element.indexOf('"'));
-                let hasNoHash = !stack.includes(classList.split('-')[0]);
+                let hasNoHash = !stack.includes(classList.slice(0, classList.indexOf('-')));
 
                 if (element !== '') {
                     classNames = classList.split(' ');
@@ -40,6 +40,7 @@ export function renderComp(opts) {
                         className = hash + '-' + className;
                         newClassNames.push(className);
                     }
+
                 }
 
                 if (newClassNames.length) {
@@ -135,11 +136,24 @@ function performanceTest(appTemplate, { testCount = 100 }) {
 }
 
 export function useAlphaHash() {
-    let result = '';
+    let hash = '';
+    let materials = ['sand', 'rock', 'pebble', 'rock', 'mud', 'granit'];
+    let types = ['brick', 'plaster', 'stone', 'wood'];
+    // let colors = ['salmon', 'lime', 'orange', 'gold', 'silver', 'bronze']
     let characters = 'abcdefghijklmnopqrstuvwxyz';
-
     for (let i = 0; i < 5; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
+        hash += characters.charAt(Math.floor(Math.random() * characters.length));
     }
-    return result;
+    // let newHash = ''
+    // let numbers = [1,2,3,4,5,6,7,8,9]
+    // for (let i = 0; i < 2; i++) {
+    //         newHash += numbers[Math.floor(Math.random() * numbers.length)];
+    //     }
+
+    hash = 
+    // colors[Math.floor(Math.random() * colors.length)] + '_' +
+    materials[Math.floor(Math.random() * materials.length)] + '_' +
+    types[Math.floor(Math.random() * types.length)] + '_' + hash
+
+    return hash;
 }
