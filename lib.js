@@ -64,25 +64,30 @@ export function renderComp(opts) {
     template = templateParts.filter(Boolean).join('');
 
     // STYLES
-    style = style.split('.')
-    for (let i = 1; i < style.length; i++) {
-        let pattern = /^[A-z]/
-        if (pattern.test(style[i])) {
-            style[i] = '.' + hash + '-' + style[i];
-        } else {
-            style[i] = '.' + style[i]
+    if (style) {
+        style = style.split('.')
+        for (let i = 1; i < style.length; i++) {
+            let pattern = /^[A-z]/
+            if (pattern.test(style[i])) {
+                style[i] = '.' + hash + '-' + style[i];
+            } else {
+                style[i] = '.' + style[i]
+            }
         }
-    }
-    style = style.join('');
 
-    let css;
-    let existingStyles = document.querySelector('style');
-    if (existingStyles) {
-        css = existingStyles;
-        css.innerHTML = existingStyles.innerHTML + style;
-    } else {
-        css = document.createElement('style');
-        css.innerHTML = style;
+        style = style.join('');
+
+        let css;
+        let existingStyles = document.querySelector('style');
+        if (existingStyles) {
+            css = existingStyles;
+            css.innerHTML = existingStyles.innerHTML + style;
+        } else {
+            css = document.createElement('style');
+            css.innerHTML = style;
+        }
+
+        document.head.append(css);
     }
 
     // JAVASCRIPT
@@ -112,7 +117,6 @@ export function renderComp(opts) {
     }
 
     js !== undefined && document.head.append(js);
-    document.head.append(css);
 
     return template;
 }
