@@ -1,6 +1,6 @@
 {
   "name": "keywall",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "vanilla front end framework",
   "type": "module",
   "module": "lib.js",

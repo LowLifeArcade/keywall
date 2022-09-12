@@ -12,20 +12,28 @@ export function renderComp(opts) {
     stack.push(hash);
 
     // TEMPLATE
-    template = template.split('class=');
-    for (let i = 0; i < template.length; i++) {
-        // if starts with " that means it was split on class and is therefor a classList
-        if (template[i].startsWith('"')) {
+    let templateParts = template.split('class=');
+    for (let i = 0; i < templateParts.length; i++) {
+        const isClassList = templateParts[i].startsWith('"');
+        if (isClassList) {
             // removes first " mark so we can test the string easier
-            let tempClass = '$class' + template[i];
-            let elArr = tempClass.split('$class"');
+            let tempClass = '$class' + templateParts[i];
+            let tempTemplateParts = tempClass.split('$class"');
 
             let element;
             let classNames = [];
-            for (let i = 0; i < elArr.length; i++) {
-                element = elArr[i];
+            for (let i = 0; i < tempTemplateParts.length; i++) {
+                element = tempTemplateParts[i];
                 let classList = element.slice(0, element.indexOf('"'));
-                let hasNoHash = !stack.includes(classList.slice(0, classList.indexOf('-')));
+                let restOfElement = element.slice(element.indexOf('"') + 1);
+
+                let hashName;
+                for (let i = 0; i < stack.length; i++) {
+                    const stackedHash = stack[i];
+                    if (classList.includes(stackedHash)) {
+                        hashName = stackedHash;
+                    }
+                }
 
                 if (element !== '') {
                     classNames = classList.split(' ');
@@ -36,25 +44,24 @@ export function renderComp(opts) {
                 for (let i = 0; i < classNames.length; i++) {
                     let className = classNames[i];
 
-                    if (hasNoHash) {
+                    if (!hashName && !className.includes(undefined)) {
                         className = hash + '-' + className;
                         newClassNames.push(className);
                     }
-
                 }
 
                 if (newClassNames.length) {
                     classNames = newClassNames;
                 }
 
-                let restOfElement = element.slice(element.indexOf('"') + 1);
                 classList = 'class="' + classNames.join(' ') + '"';
                 element = [classList, restOfElement].join('');
             }
-            template[i] = element;
+
+            templateParts[i] = element;
         }
     }
-    template = template.filter(Boolean).join('');
+    template = templateParts.filter(Boolean).join('');
 
     // STYLES
     style = style.split('.')
@@ -89,7 +96,7 @@ export function renderComp(opts) {
             }
         }
     }
-    // jsString =jsString.join('')
+
     // TODO: Use array instead of string
     let js;
     let existingJs = document.querySelector('script');
@@ -141,23 +148,15 @@ function performanceTest(appTemplate, { testCount = 100 }) {
 
 export function useAlphaHash() {
     let hash = '';
-    let materials = ['sand', 'rock', 'pebble', 'rock', 'mud', 'granit'];
-    let types = ['brick', 'plaster', 'stone', 'wood'];
-    // let colors = ['salmon', 'lime', 'orange', 'gold', 'silver', 'bronze']
+    let materials = ['mud', 'pebble', 'sand', 'andesite', 'basalt', 'diorite', 'dunite', 'granite', 'ice', 'norite', 'quartz', 'sovite', 'tuff', 'banded', 'breccia', 'chalk', 'clay', 'coal', 'dolomite', 'jasper', 'marble', 'shale', 'silt', 'flint', 'lapis', 'lux', 'wad', 'unakite', 'taconite', 'lime', 'gold', 'silver', 'bronze'];
+    let types = ['brick', 'plaster', 'stone', 'wood', 'cement', 'glass', 'steel'];
     let characters = 'abcdefghijklmnopqrstuvwxyz';
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) {
         hash += characters.charAt(Math.floor(Math.random() * characters.length));
     }
-    // let newHash = ''
-    // let numbers = [1,2,3,4,5,6,7,8,9]
-    // for (let i = 0; i < 2; i++) {
-    //         newHash += numbers[Math.floor(Math.random() * numbers.length)];
-    //     }
-
     hash = 
-    // colors[Math.floor(Math.random() * colors.length)] + '_' +
-    materials[Math.floor(Math.random() * materials.length)] + '_' +
-    types[Math.floor(Math.random() * types.length)] + '_' + hash
+    materials[Math.floor(Math.random() * materials.length)] + '-' +
+    types[Math.floor(Math.random() * types.length)] + '-' + hash
 
     return hash;
 }
