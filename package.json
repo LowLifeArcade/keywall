@@ -1,16 +1,23 @@
 {
   "name": "keywall",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "vanilla front end framework",
+  "browser": "dist/lib.umd.js",
+  "module": "dist/lib.js",
+  "main": "dist/lib.js",
   "type": "module",
-  "module": "lib.js",
-  "main": "lib.js",
   "private": false,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "rollup -c -w",
+    "build": "rollup -c"
   },
   "author": "Low Life Arcade",
   "license": "MIT",
-  "files": ["*.js", "*.cjs"]
+  "files": [
+    "dist/*", "lib.js"
+  ],
+  "devDependencies": {
+    "rollup": "^2.79.0"
+  }
 }
-  
