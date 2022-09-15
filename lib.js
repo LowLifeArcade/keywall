@@ -131,7 +131,9 @@ export function definedComp(opts) {
  */
 export function renderApp(elementId, appTemplate, options) {
     const app = document.getElementById(elementId);
-    app.innerHTML = appTemplate;
+    if (app) {
+        app.innerHTML = appTemplate;
+    }
     options?.test && performanceTest(appTemplate, options);
 }
 
