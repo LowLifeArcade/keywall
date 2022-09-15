@@ -12,59 +12,61 @@ export function definedComp(opts) {
     stack.push(hash);
 
     // TEMPLATE
-    let templateParts = template.split('class=');
-    for (let i = 0; i < templateParts.length; i++) {
-        const isClassList = templateParts[i].startsWith('"');
-        if (isClassList) {
-            // removes first " mark so we can test the string easier
-            let tempClass = '$class' + templateParts[i];
-            let tempTemplateParts = tempClass.split('$class"');
+    if(template) {
+        let templateParts = template?.split('class=');
+        for (let i = 0; i < templateParts.length; i++) {
+            const isClassList = templateParts[i].startsWith('"');
+            if (isClassList) {
+                // removes first " mark so we can test the string easier
+                let tempClass = '$class' + templateParts[i];
+                let tempTemplateParts = tempClass.split('$class"');
 
-            let element;
-            let classNames = [];
-            for (let i = 0; i < tempTemplateParts.length; i++) {
-                element = tempTemplateParts[i];
-                let classList = element.slice(0, element.indexOf('"'));
-                let restOfElement = element.slice(element.indexOf('"') + 1);
+                let element;
+                let classNames = [];
+                for (let i = 0; i < tempTemplateParts.length; i++) {
+                    element = tempTemplateParts[i];
+                    let classList = element.slice(0, element.indexOf('"'));
+                    let restOfElement = element.slice(element.indexOf('"') + 1);
 
-                let hashName;
-                for (let i = 0; i < stack.length; i++) {
-                    const stackedHash = stack[i];
-                    if (classList.includes(stackedHash)) {
-                        hashName = stackedHash;
+                    let hashName;
+                    for (let i = 0; i < stack.length; i++) {
+                        const stackedHash = stack[i];
+                        if (classList.includes(stackedHash)) {
+                            hashName = stackedHash;
+                        }
                     }
-                }
 
-                if (element !== '') {
-                    classNames = classList.split(' ');
-                }
-
-                // creates classlist with hashes
-                let newClassNames = [];
-                for (let i = 0; i < classNames.length; i++) {
-                    let className = classNames[i];
-
-                    if (!hashName && !className.includes(undefined)) {
-                        className = hash + '-' + className;
-                        newClassNames.push(className);
+                    if (element !== '') {
+                        classNames = classList.split(' ');
                     }
+
+                    // creates classlist with hashes
+                    let newClassNames = [];
+                    for (let i = 0; i < classNames.length; i++) {
+                        let className = classNames[i];
+
+                        if (!hashName && !className.includes(undefined)) {
+                            className = hash + '-' + className;
+                            newClassNames.push(className);
+                        }
+                    }
+
+                    if (newClassNames.length) {
+                        classNames = newClassNames;
+                    }
+
+                    classList = 'class="' + classNames.join(' ') + '"';
+                    element = [classList, restOfElement].join('');
                 }
 
-                if (newClassNames.length) {
-                    classNames = newClassNames;
-                }
-
-                classList = 'class="' + classNames.join(' ') + '"';
-                element = [classList, restOfElement].join('');
+                templateParts[i] = element;
             }
-
-            templateParts[i] = element;
         }
-    }
-    template = templateParts.filter(Boolean).join('');
+        template = templateParts.filter(Boolean).join('');
+    };
 
     // STYLES
-    if (style) {
+    if (style && template) {
         style = style.split('.')
         for (let i = 1; i < style.length; i++) {
             let pattern = /^[A-z]/
@@ -76,7 +78,9 @@ export function definedComp(opts) {
         }
 
         style = style.join('');
+    }
 
+    if(style) {
         let css;
         let existingStyles = document.querySelector('style');
         if (existingStyles) {
