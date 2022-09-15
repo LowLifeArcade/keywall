@@ -1,11 +1,11 @@
 let stack = [];
 
 /**
- * ### RenderComp
+ * ### definedComp
  * @param {{ template: HTMLTemplateElement, style: HTMLStyleElement }} opts
  * @returns HTMLTemplateElement
  */
-export function renderComp(opts) {
+export function definedComp(opts) {
     let { template, style, methods } = opts;
 
     const hash = useAlphaHash();
@@ -164,3 +164,6 @@ export function useAlphaHash() {
 
     return hash;
 }
+
+window.defineComp = definedComp
+window.renderApp = renderApp
