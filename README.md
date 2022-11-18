@@ -71,7 +71,7 @@ Very similar but you can just do the work in the html file as the methods are gl
 
 ```html
 <head>
-    <script async src="https://unpkg.com/keywall"></script>
+    <script async src="https://unpkg.com/keywall@latest"></script>
 </head>
 <body>
     <div id="app"></div>
