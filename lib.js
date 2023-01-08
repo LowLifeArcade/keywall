@@ -6,7 +6,7 @@ let stack = [];
  * @returns HTMLTemplateElement
  */
 export function defineComp(opts) {
-    let { template, style, methods } = opts;
+    let { html: template, styles: style, methods } = opts;
 
     const hash = useAlphaHash();
     stack.push(hash);
@@ -122,6 +122,7 @@ export function defineComp(opts) {
 
     js !== undefined && document.head.append(js);
 
+    
     return template;
 }
 
@@ -173,3 +174,9 @@ export function useAlphaHash() {
 
 window.defineComp = defineComp;
 window.renderApp = renderApp;
+window.keywall = function (id, opts) {
+    const { html, styles, methods } = opts;
+    renderApp(id, defineComp({
+        html, styles, methods
+    }))
+}

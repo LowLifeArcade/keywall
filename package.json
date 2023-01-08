@@ -1,6 +1,6 @@
 {
   "name": "keywall",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "vanilla front end framework",
   "browser": "dist/lib.umd.js",
   "module": "dist/lib.js",
