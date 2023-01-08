@@ -29,12 +29,18 @@ A small front end library for making component based apps with vanilla javascrip
                 </div>
             `,
             styles: `
+                * {
+                    box-sizing: border-box;
+                }
                 body {
+                    padding: 0;
+                    margin: 0;
                     font-family: sans-serif;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     background-color: lightgray;
+                    height: 100vh;
                 }
                 h1 {
                     color: white;
@@ -84,12 +90,18 @@ function App(props) {
             </main>
         `,
         styles: /* CSS */ `
+            * {
+                box-sizing: border-box;
+            }
             body {
+                padding: 0;
+                margin: 0;
                 font-family: sans-serif;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 background-color: lightgray;
+                height: 100vh;
             }
             html {
                 display: flex;
