@@ -171,8 +171,12 @@ export function useAlphaHash() {
 window.defineComp = defineComp;
 window.renderApp = renderApp;
 window.keywall = function (id, opts) {
-    const { html, styles, methods } = opts;
-    renderApp(id, defineComp({
-        html, styles, methods
-    }))
+    if (typeof opts === 'object') {
+        const { html, styles, methods } = opts;
+        renderApp(id, defineComp({
+            html, styles, methods
+        }))
+        return;
+    }
+    renderApp(id, opts);
 }

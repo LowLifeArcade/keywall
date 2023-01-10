@@ -23,42 +23,41 @@ A small front end library for making component based apps with vanilla javascrip
 <body>
     <div id="app"></div>
     <script async>
-        keywall('app', {
-            html: /* HTML */`
-                <div class="title-container">
-                    <h1>Keywall</h1>
-                </div>
-                <style>
-                    * {
-                        box-sizing: border-box;
-                    }
-                    body {
-                        padding: 0;
-                        margin: 0;
-                        font-family: sans-serif;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        background-color: lightgray;
-                        height: 100vh;
-                    }
-                    h1 {
-                        color: white;
-                    }
-                    .title-container {
-                        background-color: firebrick;
-                        padding: .6rem 2rem;
-                        border-radius: 3px;
-                        box-shadow: 
-                        -1px -1px 1px rgba(255,0,0,1.85),
-                        0 0 2px rgba(0,0,0,.85),
-                        0 0 3px rgba(0,0,0,.55),
-                        0 0 8px rgba(0,0,0,.35),
-                        14px 14px 28px rgba(0,0,0,.55);
-                        transform: rotate(2deg)
-                    }
-                </style>
-            `});
+        keywall('app', /* HTML */`
+            <div class="title-container">
+                <h1>Keywall</h1>
+            </div>
+            <style>
+                * {
+                    box-sizing: border-box;
+                }
+                body {
+                    padding: 0;
+                    margin: 0;
+                    font-family: sans-serif;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: lightgray;
+                    height: 100vh;
+                }
+                h1 {
+                    color: white;
+                }
+                .title-container {
+                    background-color: firebrick;
+                    padding: .6rem 2rem;
+                    border-radius: 3px;
+                    box-shadow:
+                    -1px -1px 1px rgba(255,0,0,1.85),
+                    0 0 2px rgba(0,0,0,.85),
+                    0 0 3px rgba(0,0,0,.55),
+                    0 0 8px rgba(0,0,0,.35),
+                    14px 14px 28px rgba(0,0,0,.55);
+                    transform: rotate(2deg)
+                }
+            </style>
+        `);
     </script>
 </body>
 ```
