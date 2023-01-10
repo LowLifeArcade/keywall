@@ -10,7 +10,12 @@ export function defineComp(opts) {
 
     if(template.includes('<style>')) {
         let parts = template.split('<style>');
-        style += parts[1].split('</style>')[0];
+        let stylePart = parts[1].split('</style>')[0]
+        if (style) {
+            style += stylePart ? stylePart : '';
+        } else {
+            style = stylePart ? stylePart : '';
+        }
         template = parts[0] + parts[1].split('</style>')[1];
     }
 
