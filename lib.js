@@ -178,5 +178,7 @@ window.keywall = function (id, opts) {
         }))
         return;
     }
-    renderApp(id, opts);
+    renderApp(id, defineComp({
+        html: opts
+    }));
 }
