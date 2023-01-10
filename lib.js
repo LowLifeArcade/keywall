@@ -2,11 +2,17 @@ let stack = [];
 
 /**
  * ### defineComp
- * @param {{ template: HTMLTemplateElement, style: HTMLStyleElement }} opts
+ * @param {{ html: HTMLTemplateElement, styles: HTMLStyleElement, methods: string }} opts
  * @returns HTMLTemplateElement
  */
 export function defineComp(opts) {
     let { html: template, styles: style, methods } = opts;
+
+    if(template.includes('<style>')) {
+        let parts = template.split('<style>');
+        style += parts[1].split('</style>')[0];
+        template = parts[0] + parts[1].split('</style>')[1];
+    }
 
     const hash = useAlphaHash();
     stack.push(hash);
@@ -157,19 +163,9 @@ function performanceTest(appTemplate, { testCount = 100 }) {
     console.log('Total render time: ', pTimeEnd - pTimeStart);
 }
 
-export function useAlphaHash() {
-    let hash = '';
-    let materials = ['mud', 'pebble', 'sand', 'andesite', 'basalt', 'diorite', 'dunite', 'granite', 'ice', 'norite', 'quartz', 'sovite', 'tuff', 'banded', 'breccia', 'chalk', 'clay', 'coal', 'dolomite', 'jasper', 'marble', 'shale', 'silt', 'flint', 'lapis', 'lux', 'wad', 'unakite', 'taconite', 'lime', 'gold', 'silver', 'bronze'];
-    let types = ['brick', 'plaster', 'stone', 'wood', 'cement', 'glass', 'steel'];
+export function useAlphaHash() {  
     let characters = 'abcdefghijklmnopqrstuvwxyz';
-    for (let i = 0; i < 3; i++) {
-        hash += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    hash = 
-    materials[Math.floor(Math.random() * materials.length)] + '-' +
-    types[Math.floor(Math.random() * types.length)] + '-' + hash
-
-    return hash;
+    return characters.charAt(Math.floor(Math.random() * characters.length)) + crypto.randomUUID().slice(0,5);
 }
 
 window.defineComp = defineComp;
